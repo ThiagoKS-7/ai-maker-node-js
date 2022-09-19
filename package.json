@@ -1,0 +1,32 @@
+{
+  "name": "ai-maker-node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "author": "Thiago Kasper de Souza",
+  "license": "ISC",
+  "dependencies": {
+    "@tensorflow-models/coco-ssd": "^2.2.2",
+    "@tensorflow/tfjs": "^3.20.0",
+    "@tensorflow/tfjs-backend-cpu": "^3.20.0",
+    "@tensorflow/tfjs-backend-webgl": "^3.20.0",
+    "@tensorflow/tfjs-converter": "^3.20.0",
+    "@tensorflow/tfjs-core": "^3.20.0",
+    "express": "^4.18.1",
+    "jpeg-js": "^0.4.4",
+    "nodemon": "^2.0.20",
+    "opencv4nodejs": "^5.6.0",
+    "react-scripts": "^3.4.0",
+    "socket.io": "^4.5.2"
+  },
+  "opencv4nodejs": {
+    "disableAutoBuild": 1,
+    "opencvIncludeDir": "C:\\opencv\\build\\include",
+    "opencvLibDir": "C:\\opencv\\build\\x64\\vc14\\lib",
+    "opencvBinDir": "C:\\opencv\\build\\x64\\vc14\\bin"
+  }
+}
