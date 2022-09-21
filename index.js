@@ -1,26 +1,33 @@
 const express = require('express')
-const fs = require('fs');
-const tf = require("@tensorflow/tfjs");
-//const tfc = require("@tensorflow/tfjs-core");
-//const jpeg_js = require("jpeg-js");
-const cocoSsd = require('@tensorflow-models/coco-ssd');
-//const cv = require('opencv4nodejs');
 const app = express()
 const port = 3000
 const { pipeline } = require('stream/promises');
-require('@tensorflow/tfjs-backend-cpu');
-require('@tensorflow/tfjs-backend-webgl');
-require("@tensorflow/tfjs-converter");
+const tf = require('@tensorflow/tfjs-node')
+//const tf = require('@tensorflow/tfjs-node-gpu')
 
-let img = '';
+const cocossd = require('@tensorflow-models/coco-ssd');
+
+const fs = require('fs');
+
+
+
+async function load(buf) {
+    const img = tf.node.decodeJpeg(buf);
+    const model = await cocossd.load({ 'base': 'mobilenet_v2' });
+    const predictions = await model.detect(img);
+
+    console.log('Predictions: ');
+    console.log(predictions);
+    drawPredictions(predictions);
+}
+
 const downloadFile = async (url, path) => pipeline(
     (await fetch(url)).body,
     fs.createWriteStream(path),
-    setTimeout(() => predict(), 2000)
+    setTimeout(() => load(path), 2000)
 );
 
-app.get('/teste', (req, res) => {
-    const model = cocoSsd.load();
+app.get('/detect', (req, res) => {
     downloadFile('https://www.dailydemocrat.com/wp-content/uploads/2022/01/COVIDTESTKITS-01.jpg?w=1024', 'test.jpg');
     console.log("\x1b[33m%s\x1b[0m", "====================\n\nImage download suceeded!\n\n====================\n");
     console.log(tf.version)
